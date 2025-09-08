@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intimus - Sua Loja de Prazer</title>
+    <title>Mabelle Tangará - Sua Loja de Prazer</title>
     <!-- Fontes do Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -317,6 +317,58 @@
              border-color: var(--cor-sucesso);
              cursor: not-allowed;
         }
+
+        /* --- Seção de Categorias --- */
+        .popular-categories {
+            padding: 60px 0;
+            background-color: var(--cor-fundo);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .category-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 350px;
+            display: block;
+        }
+
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .category-card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .category-card h3 {
+            color: white;
+            font-size: 24px;
+            text-shadow: 1px 1px 3px black;
+            margin: 0;
+        }
         
         /* --- Rodapé --- */
         footer {
@@ -355,7 +407,7 @@
     <!-- Módulo de Verificação de Idade -->
     <div id="age-gate">
         <div class="age-gate-box">
-            <h1>Bem-vindo(a) à Intimus</h1>
+            <h1>Bem-vindo(a) à Mabelle Tangará</h1>
             <p>Este site contém conteúdo destinado a adultos. Para entrar, você deve ter 18 anos ou mais. Ao continuar, você confirma que tem idade legal para visualizar este conteúdo em sua região.</p>
             <div class="age-gate-buttons">
                 <button id="age-gate-enter">Tenho mais de 18 anos</button>
@@ -368,7 +420,7 @@
     <div id="main-content">
         <header>
             <div class="container header-content">
-                <div class="logo">Intimus</div>
+                <div class="logo">Mabelle Tangará</div>
                 <nav>
                     <ul>
                         <li><a href="#">Lançamentos</a></li>
@@ -429,6 +481,60 @@
                             <p class="product-price">R$ 129,90</p>
                             <button class="add-to-cart-btn">Adicionar ao Carrinho</button>
                         </div>
+                        <!-- Produto 5 -->
+                        <div class="product-card">
+                            <img src="https://placehold.co/400x400/1e1e1e/c53364?text=Produto+5" alt="Nome do Produto 5">
+                            <h3>Kit Fantasia Colegial</h3>
+                            <p class="product-price">R$ 159,90</p>
+                            <button class="add-to-cart-btn">Adicionar ao Carrinho</button>
+                        </div>
+                        <!-- Produto 6 -->
+                        <div class="product-card">
+                            <img src="https://placehold.co/400x400/1e1e1e/c53364?text=Produto+6" alt="Nome do Produto 6">
+                            <h3>Gel Excitante Hot Kiss</h3>
+                            <p class="product-price">R$ 49,90</p>
+                            <button class="add-to-cart-btn">Adicionar ao Carrinho</button>
+                        </div>
+                        <!-- Produto 7 -->
+                        <div class="product-card">
+                            <img src="https://placehold.co/400x400/1e1e1e/c53364?text=Produto+7" alt="Nome do Produto 7">
+                            <h3>Conjunto de Algemas</h3>
+                            <p class="product-price">R$ 99,90</p>
+                            <button class="add-to-cart-btn">Adicionar ao Carrinho</button>
+                        </div>
+                        <!-- Produto 8 -->
+                        <div class="product-card">
+                            <img src="https://placehold.co/400x400/1e1e1e/c53364?text=Produto+8" alt="Nome do Produto 8">
+                            <h3>Vela Beijável Sabor Morango</h3>
+                            <p class="product-price">R$ 79,90</p>
+                            <button class="add-to-cart-btn">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="popular-categories">
+                <div class="container">
+                    <h2 class="section-title">Categorias Populares</h2>
+                    <div class="categories-grid">
+                        <a href="#" class="category-card">
+                            <img src="https://placehold.co/400x500/c53364/121212?text=Lingeries" alt="Lingeries">
+                            <div class="category-card-overlay">
+                                <h3>Lingeries</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="category-card">
+                            <img src="https://placehold.co/400x500/c53364/121212?text=Vibradores" alt="Vibradores">
+                            <div class="category-card-overlay">
+                                <h3>Vibradores</h3>
+                            </div>
+                        </a>
+                        <a href="#" class="category-card">
+                            <img src="https://placehold.co/400x500/c53364/121212?text=Cosméticos" alt="Cosméticos">
+                            <div class="category-card-overlay">
+                                <h3>Cosméticos</h3>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </section>
@@ -436,7 +542,7 @@
         
         <footer>
             <div class="container">
-                <p>&copy; 2025 Intimus. Todos os direitos reservados. Envio discreto para todo o Brasil.</p>
+                <p>&copy; 2025 Mabelle Tangará. Todos os direitos reservados. Envio discreto para todo o Brasil.</p>
                 <div class="social-icons">
                     <a href="#"><svg fill="currentColor" viewBox="0 0 24 24" aria-label="Instagram logo"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.585-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.585.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.415 2.175 8.796 2.163 12 2.163m0-2.163C8.74 0 8.333.012 7.053.072 2.695.272.273 2.69.073 7.052.012 8.333 0 8.74 0 12s.012 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.988 8.74 24 12 24s3.667-.012 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98C23.988 15.667 24 15.26 24 12s-.012-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98C15.667.012 15.26 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"></path></svg></a>
                     <a href="#"><svg fill="currentColor" viewBox="0 0 24 24" aria-label="Facebook logo"><path d="M22.675 0h-21.35C.59 0 0 .59 0 1.325v21.35C0 23.41.59 24 1.325 24H12.82v-9.29H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.735 0 1.325-.59 1.325-1.325V1.325C24 .59 23.41 0 22.675 0z"></path></svg></a>
@@ -505,3 +611,4 @@
 
 </body>
 </html>
+
