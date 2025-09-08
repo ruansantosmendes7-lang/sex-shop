@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mabelle Tangará - Sua Loja de Prazer</title>
+    <title>Mabelle Secrets - Sua Loja de Prazer</title>
     <!-- Fontes do Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,6 @@
             --cor-fundo: #121212;     /* Fundo escuro */
             --cor-texto: #f5f5f5;     /* Texto claro */
             --cor-card: #1e1e1e;      /* Fundo dos cards de produto */
-            --cor-sucesso: #21ba45;   /* Verde para feedback */
         }
 
         * {
@@ -93,15 +92,7 @@
             bottom: -5px; left: 0; background-color: var(--cor-principal); transition: width 0.3s ease;
         }
         nav a:hover::after { width: 100%; }
-        .header-icons { display: flex; gap: 20px; align-items: center; }
-        .header-icons svg { width: 24px; height: 24px; cursor: pointer; transition: transform 0.3s ease; }
-        .header-icons svg:hover { transform: scale(1.1); }
-        #cart-container { position: relative; }
-        #cart-count {
-            background-color: var(--cor-principal); color: white; border-radius: 50%; padding: 2px 6px;
-            font-size: 12px; position: absolute; top: -8px; right: -8px; font-weight: bold;
-        }
-
+        
         /* --- Botão e Título Padrão --- */
         .page-header {
             display: flex;
@@ -119,7 +110,7 @@
         
         /* --- Seção de Destaque (Hero) --- */
         .hero {
-            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://placehold.co/1200x500/c53364/121212?text=Liberte+Seus+Desejos');
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://i.imgur.com/eCmaSf2.png');
             background-size: cover; background-position: center; padding: 100px 0; text-align: center;
         }
         .hero h2 { font-size: 48px; margin-bottom: 20px; text-shadow: 2px 2px 5px rgba(0,0,0,0.5); }
@@ -127,12 +118,12 @@
         .btn {
             background-color: var(--cor-principal); color: white; padding: 15px 35px; border-radius: 5px;
             font-size: 16px; font-weight: 700; transition: all 0.3s ease; border: 2px solid var(--cor-principal);
-            cursor: pointer;
+            cursor: pointer; display: inline-block;
         }
         .btn:hover { color: white; transform: scale(1.05); box-shadow: 0 0 15px var(--cor-principal); }
         
         /* --- Seção de Produtos --- */
-        .products-section, .categories-section { padding: 60px 0; }
+        .products-section, .categories-section, .gemini-section { padding: 60px 0; }
         .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
         .product-card {
             background-color: var(--cor-card); border-radius: 10px; overflow: hidden; text-align: center;
@@ -167,26 +158,50 @@
         .product-detail-info h2 { font-size: 32px; color: var(--cor-principal); margin-bottom: 15px; }
         .product-detail-info .product-price { font-size: 28px; margin-bottom: 20px; }
         .product-detail-info p { line-height: 1.8; margin-bottom: 30px; color: #ccc; }
-
-        /* --- Página do Carrinho --- */
-        #page-cart .container { padding-top: 60px; }
-        .cart-item {
-            display: grid; grid-template-columns: 100px 1fr auto; gap: 20px;
-            align-items: center; padding: 20px 0; border-bottom: 1px solid #333;
+        .gemini-button {
+            background: transparent; border: 2px solid var(--cor-principal); color: var(--cor-principal);
+            margin-top: -15px; margin-bottom: 20px;
         }
-        .cart-item img { border-radius: 5px; }
-        .cart-item-info h3 { margin: 0 0 5px; font-size: 18px; }
-        .cart-item-price { font-weight: bold; }
-        .cart-total { text-align: right; margin-top: 30px; }
-        .cart-total h3 { font-size: 24px; }
-        .cart-total .btn { margin-top: 20px; }
-        #empty-cart-message { text-align: center; padding: 50px 0; }
+        
+        /* --- Funcionalidades Gemini --- */
+        #gemini-suggestion-container {
+            background-color: var(--cor-card);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 20px;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #gemini-suggestion-result {
+            font-style: italic;
+            color: #ddd;
+            line-height: 1.7;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--cor-principal);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         /* --- Rodapé --- */
         footer { background-color: var(--cor-card); padding: 40px 0; border-top: 1px solid #333; text-align: center; }
-        footer p { margin-bottom: 20px; }
-        .social-icons { display: flex; justify-content: center; gap: 20px; }
-        .social-icons svg { width: 28px; height: 28px; }
+        .footer-contact {
+            display: flex; justify-content: center; align-items: center;
+            gap: 30px; margin-top: 20px; flex-wrap: wrap;
+        }
+        .social-icon {
+            display: flex; align-items: center; gap: 10px;
+            color: var(--cor-texto); font-size: 16px;
+        }
+        .social-icon svg { width: 28px; height: 28px; }
         
         /* --- Layout Responsivo --- */
         @media (max-width: 768px) {
@@ -203,7 +218,7 @@
     <!-- Módulo de Verificação de Idade -->
     <div id="age-gate">
         <div class="age-gate-box">
-            <h1>Bem-vindo(a) à Mabelle Tangará</h1>
+            <h1>Bem-vindo(a) à Mabelle Secrets</h1>
             <p>Este site contém conteúdo destinado a adultos. Para entrar, você deve ter 18 anos ou mais. Ao continuar, você confirma que tem idade legal para visualizar este conteúdo em sua região.</p>
             <div class="age-gate-buttons">
                 <button id="age-gate-enter">Tenho mais de 18 anos</button>
@@ -216,7 +231,7 @@
     <div id="main-content">
         <header>
             <div class="container header-content">
-                <div class="logo">Mabelle Tangará</div>
+                <div class="logo">Mabelle Secrets</div>
                 <nav>
                     <ul>
                         <li><a data-category="Lançamentos">Lançamentos</a></li>
@@ -225,12 +240,6 @@
                         <li><a data-category="Lingeries">Lingeries</a></li>
                     </ul>
                 </nav>
-                <div class="header-icons">
-                    <div id="cart-container">
-                        <svg fill="currentColor" viewBox="0 0 20 20"><path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path></svg>
-                        <span id="cart-count">0</span>
-                    </div>
-                </div>
             </div>
         </header>
 
@@ -242,6 +251,15 @@
                         <h2>Liberte Seus Desejos</h2>
                         <p>Produtos selecionados para suas melhores experiências. Embalagem 100% discreta.</p>
                         <a class="btn nav-link" data-category="Lançamentos">Explorar Lançamentos</a>
+                    </div>
+                </div>
+                <!-- Nova secção Gemini -->
+                <div class="gemini-section container">
+                    <h2 class="section-title">Precisa de Inspiração?</h2>
+                    <p style="text-align: center; margin-bottom: 20px;">Deixe a nossa assistente virtual criar o ambiente perfeito para si.</p>
+                    <button id="gemini-suggestion-btn" class="btn" style="margin: 0 auto; display: block;">Gerar Sugestão da Noite ✨</button>
+                    <div id="gemini-suggestion-container">
+                        <div id="gemini-suggestion-result">A sua sugestão aparecerá aqui...</div>
                     </div>
                 </div>
                 <div class="products-section container" id="home-products">
@@ -278,30 +296,10 @@
                         <div class="product-detail-info">
                             <h2 class="product-name">Nome do Produto</h2>
                             <p class="product-price">R$ 0,00</p>
+                            <button class="btn gemini-button" id="gemini-description-btn">Gerar Descrição Criativa ✨</button>
                             <p class="product-description">Descrição completa do produto...</p>
-                            <button class="btn add-to-cart-btn" data-id="">Adicionar ao Carrinho</button>
+                            <a href="#" class="btn whatsapp-button" target="_blank" rel="noopener noreferrer">Comprar no WhatsApp</a>
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- PÁGINA DO CARRINHO (gerada dinamicamente) -->
-            <section id="page-cart" class="page-section">
-                <div class="container">
-                    <div class="page-header">
-                        <button class="back-button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></button>
-                        <h2 class="section-title">Meu Carrinho</h2>
-                    </div>
-                    <div id="cart-items-container">
-                        <!-- Itens do carrinho são inseridos aqui -->
-                    </div>
-                    <div id="empty-cart-message" style="display: none;">
-                        <h3>Seu carrinho está vazio.</h3>
-                        <p>Adicione produtos para vê-los aqui.</p>
-                    </div>
-                    <div class="cart-total" style="display: none;">
-                        <h3>Subtotal: <span id="cart-subtotal">R$ 0,00</span></h3>
-                        <button class="btn">Finalizar Compra</button>
                     </div>
                 </div>
             </section>
@@ -309,7 +307,17 @@
         
         <footer>
             <div class="container">
-                <p>&copy; 2025 Mabelle Tangará. Todos os direitos reservados. Envio discreto para todo o Brasil.</p>
+                <p>&copy; 2025 Mabelle Secrets. Todos os direitos reservados. Envio discreto para todo o Brasil.</p>
+                <div class="footer-contact">
+                    <a href="https://www.instagram.com/mabelle.tangara?utm_source=ig_web_button_share_sheet&igsh=cXQ3MjB5bzU4dTZo" target="_blank" rel="noopener noreferrer" class="social-icon">
+                        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.585-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.585.069-4.85c.149-3.225 1.664 4.771 4.919 4.919C8.415 2.175 8.796 2.163 12 2.163m0-2.163C8.74 0 8.333.012 7.053.072 2.695.272.273 2.69.073 7.052.012 8.333 0 8.74 0 12s.012 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.988 8.74 24 12 24s3.667-.012 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98C23.988 15.667 24 15.26 24 12s-.012-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98C15.667.012 15.26 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"></path></svg>
+                        <span>mabelle.tangara</span>
+                    </a>
+                    <a href="#" id="footer-whatsapp-link" target="_blank" rel="noopener noreferrer" class="social-icon">
+                        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.996 0-3.935-.53-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.267.655 4.398 1.803 6.182l-.341 1.236 1.241-.328z"></path></svg>
+                        <span>(65) 99928-7778</span>
+                    </a>
+                </div>
             </div>
         </footer>
     </div>
@@ -319,34 +327,61 @@
             
             // --- BANCO DE DADOS DE PRODUTOS (SIMULADO) ---
             const products = [
-                { id: 1, name: 'Vibrador Sônico Pro', price: 299.90, image: 'https://placehold.co/400x400/1e1e1e/c53364?text=Vibrador+Sônico', category: 'Para Elas', description: 'Tecnologia sônica para sensações incomparáveis. Múltiplas intensidades e material de silicone seguro para o corpo.', featured: true },
-                { id: 2, name: 'Lingerie Renda Noire', price: 189.90, image: 'https://placehold.co/400x400/1e1e1e/c53364?text=Lingerie+Noire', category: 'Lingeries', description: 'Conjunto de lingerie em renda preta, desenhado para valorizar suas curvas com elegância e sensualidade.', featured: true },
-                { id: 3, name: 'Óleo de Massagem Corporal', price: 89.90, image: 'https://placehold.co/400x400/1e1e1e/c53364?text=Óleo+de+Massagem', category: 'Cosméticos', description: 'Óleo com fragrância afrodisíaca, perfeito para momentos de relaxamento e intimidade. Desliza facilmente sobre a pele.', featured: true },
-                { id: 4, name: 'Plug Anal Iniciante', price: 129.90, image: 'https://placehold.co/400x400/1e1e1e/c53364?text=Plug+Iniciante', category: 'Para Eles', description: 'Ideal para quem está começando a explorar o prazer anal. Feito de silicone macio e com base segura.', featured: true },
-                { id: 5, name: 'Kit Fantasia Colegial', price: 159.90, image: 'https://placehold.co/400x400/1e1e1e/c53364?text=Kit+Fantasia', category: 'Lingeries', description: 'Realize suas fantasias com este kit completo de colegial, incluindo saia, top e acessórios.', featured: true },
-                { id: 6, name: 'Gel Excitante Hot Kiss', price: 49.90, image: 'https://placehold.co/400x400/1e1e1e/c53364?text=Gel+Excitante', category: 'Cosméticos', description: 'Gel beijável com efeito quente que aumenta a sensibilidade e o prazer. Perfeito para preliminares.', featured: true },
-                { id: 7, name: 'Anel Peniano com Vibração', price: 99.90, image: 'https://placehold.co/400x400/1e1e1e/c53364?text=Anel+Peniano', category: 'Para Eles', description: 'Prolonga a ereção e proporciona vibrações estimulantes para o casal. Material flexível e confortável.', featured: false },
-                { id: 8, name: 'Vela Beijável Sabor Morango', price: 79.90, image: 'https://placehold.co/400x400/1e1e1e/c53364?text=Vela+Beijável', category: 'Cosméticos', description: 'Acenda, espere derreter e use como um óleo de massagem quente e beijável. Delicioso sabor de morango.', featured: true },
-                { id: 9, name: 'Bullet Vibrador Discreto', price: 119.90, image: 'https://placehold.co/400x400/1e1e1e/c53364?text=Bullet', category: 'Para Elas', description: 'Pequeno, potente e discreto. Perfeito para levar na bolsa e usar onde a imaginação permitir.', featured: false },
-                { id: 10, name: 'Body Chain Sensual', price: 139.90, image: 'https://placehold.co/400x400/1e1e1e/c53364?text=Body+Chain', category: 'Lingeries', description: 'Acessório corporal que enfeita e adiciona um toque extra de sensualidade ao seu visual.', featured: false }
+                { id: 1, name: 'Vibrador Sônico Pro', price: 299.90, image: 'https://images.unsplash.com/photo-1617804159114-1b5962788533?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80', category: 'Para Elas', description: 'Tecnologia sônica para sensações incomparáveis. Múltiplas intensidades e material de silicone seguro para o corpo.', featured: true },
+                { id: 2, name: 'Lingerie Renda Noire', price: 189.90, image: 'https://images.unsplash.com/photo-1619118399587-fd8935447e17?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80', category: 'Lingeries', description: 'Conjunto de lingerie em renda preta, desenhado para valorizar suas curvas com elegância e sensualidade.', featured: true },
+                { id: 3, name: 'Óleo de Massagem Corporal', price: 89.90, image: 'https://images.unsplash.com/photo-1620916566398-39f19a3e7e3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80', category: 'Cosméticos', description: 'Óleo com fragrância afrodisíaca, perfeito para momentos de relaxamento e intimidade. Desliza facilmente sobre a pele.', featured: true },
+                { id: 4, name: 'Plug Anal Iniciante', price: 129.90, image: 'https://images.unsplash.com/photo-1603722350802-b31a0a241a7c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80', category: 'Para Eles', description: 'Ideal para quem está começando a explorar o prazer anal. Feito de silicone macio e com base segura.', featured: true },
+                { id: 5, name: 'Kit Fantasia Colegial', price: 159.90, image: 'https://images.unsplash.com/photo-1594912223528-9a9b23351221?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80', category: 'Lingeries', description: 'Realize suas fantasias com este kit completo de colegial, incluindo saia, top e acessórios.', featured: true },
+                { id: 6, name: 'Gel Excitante Hot Kiss', price: 49.90, image: 'https://images.unsplash.com/photo-1631089552195-8f029063b5e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80', category: 'Cosméticos', description: 'Gel beijável com efeito quente que aumenta a sensibilidade e o prazer. Perfeito para preliminares.', featured: true },
+                { id: 7, name: 'Anel Peniano com Vibração', price: 99.90, image: 'https://images.unsplash.com/photo-1639550325179-8c4f923521b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80', category: 'Para Eles', description: 'Prolonga a ereção e proporciona vibrações estimulantes para o casal. Material flexível e confortável.', featured: false },
+                { id: 8, name: 'Vela Beijável Sabor Morango', price: 79.90, image: 'https://images.unsplash.com/photo-1616110943943-d3435d3d8201?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80', category: 'Cosméticos', description: 'Acenda, espere derreter e use como um óleo de massagem quente e beijável. Delicioso sabor de morango.', featured: true },
+                { id: 9, name: 'Bullet Vibrador Discreto', price: 119.90, image: 'https://images.unsplash.com/photo-1621484252328-55d1b1fba5b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80', category: 'Para Elas', description: 'Pequeno, potente e discreto. Perfeito para levar na bolsa e usar onde a imaginação permitir.', featured: false },
+                { id: 10, name: 'Body Chain Sensual', price: 139.90, image: 'https://images.unsplash.com/photo-1642699293132-a4f220376587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80', category: 'Lingeries', description: 'Acessório corporal que enfeita e adiciona um toque extra de sensualidade ao seu visual.', featured: false }
             ];
             
             // --- ESTADO DA APLICAÇÃO ---
-            let cart = [];
             let historyStack = ['page-home']; // Pilha para o botão "Voltar"
+            let currentProduct = null; // Armazena o produto da página de detalhe
 
             // --- ELEMENTOS DO DOM ---
             const ageGate = document.getElementById('age-gate');
             const mainContent = document.getElementById('main-content');
             const pages = document.querySelectorAll('.page-section');
-            const cartCountElement = document.getElementById('cart-count');
             
+            // --- FUNÇÃO DE CHAMADA DA API GEMINI ---
+            const callGeminiAPI = async (prompt, resultContainer) => {
+                const apiKey = "AIzaSyC2fHWnV4Dk7AFNad1bfwigfqHc19PJHMI"; // Chave da API adicionada
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                
+                resultContainer.innerHTML = '<div class="loader"></div>';
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }]
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    const text = data.candidates[0].content.parts[0].text;
+                    resultContainer.innerHTML = text.replace(/\n/g, '<br>');
+
+                } catch (error) {
+                    console.error("Erro na API Gemini:", error);
+                    resultContainer.textContent = 'Não foi possível gerar a sugestão. Tente novamente mais tarde.';
+                }
+            };
+
             // --- FUNÇÕES DE RENDERIZAÇÃO ---
             
-            // Formata preço para o padrão brasileiro
             const formatPrice = (price) => `R$ ${price.toFixed(2).replace('.', ',')}`;
 
-            // Cria o HTML de um card de produto
             const createProductCard = (product) => `
                 <div class="product-card" data-id="${product.id}">
                     <img src="${product.image}" alt="${product.name}">
@@ -358,11 +393,9 @@
                     </div>
                 </div>`;
 
-            // Renderiza uma lista de produtos em um container
             const renderProducts = (productsToRender, containerSelector) => {
                 const container = document.querySelector(containerSelector);
                 container.innerHTML = productsToRender.map(createProductCard).join('');
-                // Adiciona listeners aos novos cards
                 container.querySelectorAll('.product-card').forEach(card => {
                     card.addEventListener('click', () => showProductDetail(card.dataset.id));
                 });
@@ -382,18 +415,23 @@
                 if (historyStack.length > 1) {
                     historyStack.pop();
                     const previousPage = historyStack[historyStack.length - 1];
+                    // Se voltar para detalhes do produto, restaura a descrição original
+                    if (previousPage.startsWith('page-product-detail')) {
+                        const detailPage = document.getElementById('page-product-detail');
+                        if (currentProduct) {
+                            detailPage.querySelector('.product-description').textContent = currentProduct.description;
+                        }
+                    }
                     navigateTo(previousPage, false);
                 }
             };
 
             // --- FUNÇÕES DE LÓGICA DE PÁGINA ---
 
-            // Mostra a página de uma categoria
             const showCategoryPage = (categoryName) => {
                 document.getElementById('category-title').textContent = categoryName;
                 let filteredProducts;
                 if (categoryName === 'Lançamentos') {
-                    // Simula "lançamentos" pegando os últimos produtos adicionados
                     filteredProducts = products.slice(-5); 
                 } else {
                     filteredProducts = products.filter(p => p.category === categoryName);
@@ -402,10 +440,10 @@
                 navigateTo('page-category');
             };
             
-            // Mostra os detalhes de um produto
             const showProductDetail = (productId) => {
                 const product = products.find(p => p.id == productId);
                 if (!product) return;
+                currentProduct = product; // Armazena o produto atual
                 
                 const detailPage = document.getElementById('page-product-detail');
                 detailPage.querySelector('.product-detail-image img').src = product.image;
@@ -413,84 +451,22 @@
                 detailPage.querySelector('.product-name').textContent = product.name;
                 detailPage.querySelector('.product-price').textContent = formatPrice(product.price);
                 detailPage.querySelector('.product-description').textContent = product.description;
-                const addToCartBtn = detailPage.querySelector('.add-to-cart-btn');
-                addToCartBtn.dataset.id = product.id;
                 
-                // Atualiza o estado do botão "Adicionar ao Carrinho"
-                updateAddToCartButtonState(addToCartBtn, product.id);
+                const whatsappButton = detailPage.querySelector('.whatsapp-button');
+                const phoneNumber = '5565999287778';
+                const message = `Olá! Tenho interesse no produto: ${product.name} - ${formatPrice(product.price)}`;
+                const encodedMessage = encodeURIComponent(message);
+                
+                whatsappButton.href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
                 
                 navigateTo('page-product-detail');
             };
-            
-            // Mostra a página do carrinho
-            const showCartPage = () => {
-                const cartContainer = document.getElementById('cart-items-container');
-                const emptyMsg = document.getElementById('empty-cart-message');
-                const totalSection = document.querySelector('.cart-total');
-                
-                if (cart.length === 0) {
-                    cartContainer.innerHTML = '';
-                    emptyMsg.style.display = 'block';
-                    totalSection.style.display = 'none';
-                } else {
-                    emptyMsg.style.display = 'none';
-                    totalSection.style.display = 'block';
-                    
-                    let subtotal = 0;
-                    cartContainer.innerHTML = cart.map(productId => {
-                        const product = products.find(p => p.id === productId);
-                        subtotal += product.price;
-                        return `
-                            <div class="cart-item">
-                                <img src="${product.image}" alt="${product.name}">
-                                <div class="cart-item-info">
-                                    <h3>${product.name}</h3>
-                                    <p class="cart-item-price">${formatPrice(product.price)}</p>
-                                </div>
-                            </div>`;
-                    }).join('');
-                    
-                    document.getElementById('cart-subtotal').textContent = formatPrice(subtotal);
-                }
-                
-                navigateTo('page-cart');
-            };
 
-            // --- LÓGICA DO CARRINHO ---
-            const updateCartCount = () => {
-                cartCountElement.textContent = cart.length;
-            };
-
-            const addToCart = (productId) => {
-                cart.push(parseInt(productId));
-                updateCartCount();
-                // Fornece feedback visual
-                const btn = document.querySelector(`.add-to-cart-btn[data-id="${productId}"]`);
-                if (btn) updateAddToCartButtonState(btn, productId);
-            };
-
-            const updateAddToCartButtonState = (button, productId) => {
-                 if (cart.includes(parseInt(productId))) {
-                    button.textContent = 'Adicionado!';
-                    button.style.backgroundColor = 'var(--cor-sucesso)';
-                    button.style.borderColor = 'var(--cor-sucesso)';
-                    button.style.color = 'white';
-                    button.disabled = true;
-                } else {
-                    button.textContent = 'Adicionar ao Carrinho';
-                    button.style.backgroundColor = 'var(--cor-principal)';
-                    button.style.color = 'white';
-                    button.disabled = false;
-                }
-            };
-            
-            // --- INICIALIZAÇÃO ---
+            // --- INICIALIZAÇÃO E LISTENERS ---
             
             const initializeSite = () => {
-                // Renderiza produtos em destaque na home
                 renderProducts(products.filter(p => p.featured), '#home-products .products-grid');
                 
-                // Renderiza cards de categoria na home
                 const categories = [...new Set(products.map(p => p.category))];
                 const categoriesContainer = document.querySelector('#page-home .categories-grid');
                 categoriesContainer.innerHTML = categories.map(cat => `
@@ -499,7 +475,6 @@
                         <div class="category-card-overlay"><h3>${cat}</h3></div>
                     </a>`).join('');
 
-                // Adiciona listeners aos links de navegação
                 document.querySelectorAll('.nav-link, nav a').forEach(link => {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
@@ -507,19 +482,31 @@
                     });
                 });
 
-                // Listeners de elementos globais
                 document.querySelector('.logo').addEventListener('click', () => navigateTo('page-home'));
-                document.getElementById('cart-container').addEventListener('click', showCartPage);
                 document.querySelectorAll('.back-button').forEach(btn => btn.addEventListener('click', goBack));
                 
-                // Listener para adicionar ao carrinho (delegação de evento)
-                document.addEventListener('click', (e) => {
-                    if (e.target && e.target.matches('.add-to-cart-btn')) {
-                        addToCart(e.target.dataset.id);
+                const footerWhatsApp = document.getElementById('footer-whatsapp-link');
+                const phoneNumber = '5565999287778';
+                const footerMessage = encodeURIComponent('Olá! Visitei o site da Mabelle Secrets e gostaria de mais informações.');
+                footerWhatsApp.href = `https://wa.me/${phoneNumber}?text=${footerMessage}`;
+
+                // Listener para "Sugestão da Noite"
+                document.getElementById('gemini-suggestion-btn').addEventListener('click', () => {
+                    const prompt = "Aja como um especialista de produtos eróticos, sofisticado e discreto, da loja 'Mabelle Secrets'. Sugira uma experiência romântica para uma noite especial, utilizando criativamente os seguintes produtos da nossa loja: Vibrador Sônico Pro, Lingerie Renda Noire, e Óleo de Massagem Corporal. Descreva um cenário inspirador, focando na conexão e descoberta do casal. A resposta deve ser um parágrafo curto, elegante e sedutor, escrito em português do Brasil.";
+                    const resultContainer = document.getElementById('gemini-suggestion-result');
+                    callGeminiAPI(prompt, resultContainer);
+                });
+
+                // Listener para "Descrição Criativa"
+                document.getElementById('gemini-description-btn').addEventListener('click', () => {
+                    if (currentProduct) {
+                         const prompt = `Você é um copywriter poético e sedutor da loja 'Mabelle Secrets'. Crie uma descrição alternativa, curta e inspiradora (2-3 frases) para o produto: "${currentProduct.name}". Foque nas sensações e na promessa da experiência, em vez de detalhes técnicos. Use uma linguagem elegante e sugestiva, em português do Brasil.`;
+                         const resultContainer = document.querySelector('#page-product-detail .product-description');
+                         callGeminiAPI(prompt, resultContainer);
                     }
                 });
 
-                navigateTo('page-home', false); // Exibe a página inicial
+                navigateTo('page-home', false);
             };
 
             // --- LÓGICA DO VERIFICADOR DE IDADE ---
