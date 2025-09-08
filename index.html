@@ -191,6 +191,52 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
+        /* --- Página do Quiz --- */
+        #page-quiz .container { padding-top: 60px; text-align: center; }
+        #quiz-progress { margin-bottom: 10px; color: #aaa; }
+        #quiz-question { font-size: 24px; margin-bottom: 30px; min-height: 60px; }
+        #quiz-answer-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .answer-btn {
+            background-color: var(--cor-card);
+            border: 2px solid #333;
+            color: var(--cor-texto);
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .answer-btn:hover {
+            border-color: var(--cor-principal);
+            transform: scale(1.05);
+        }
+        #quiz-result-container {
+            margin-top: 40px;
+            padding: 30px;
+            background-color: var(--cor-card);
+            border-radius: 10px;
+            text-align: left;
+        }
+        #gemini-quiz-result ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        #gemini-quiz-result li {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        #gemini-quiz-result strong {
+            color: var(--cor-principal);
+            display: block;
+            margin-bottom: 5px;
+        }
+        
         /* --- Rodapé --- */
         footer { background-color: var(--cor-card); padding: 40px 0; border-top: 1px solid #333; text-align: center; }
         .footer-contact {
@@ -257,6 +303,7 @@
             .section-title { font-size: 28px; }
             .age-gate-buttons { display: flex; flex-direction: column; gap: 15px; }
             .product-detail-layout { grid-template-columns: 1fr; }
+            #quiz-answer-options { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -269,6 +316,7 @@
         <a class="mobile-nav-link" data-category="Para Elas">Para Elas</a>
         <a class="mobile-nav-link" data-category="Para Eles">Para Eles</a>
         <a class="mobile-nav-link" data-category="Lingeries">Lingeries</a>
+        <a class="mobile-nav-link" data-page="page-quiz">Quiz ✨</a>
     </div>
 
     <!-- Módulo de Verificação de Idade -->
@@ -294,6 +342,7 @@
                         <li><a data-category="Para Elas">Para Elas</a></li>
                         <li><a data-category="Para Eles">Para Eles</a></li>
                         <li><a data-category="Lingeries">Lingeries</a></li>
+                        <li><a data-page="page-quiz">Quiz ✨</a></li>
                     </ul>
                 </nav>
                 <div id="hamburger-menu">
@@ -364,6 +413,30 @@
                     </div>
                 </div>
             </section>
+            
+            <!-- PÁGINA DO QUIZ INTERATIVO -->
+            <section id="page-quiz" class="page-section">
+                <div class="container gemini-section">
+                    <div class="page-header">
+                        <button class="back-button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></button>
+                        <h2 class="section-title">Descubra o seu Desejo ✨</h2>
+                    </div>
+                    <div id="quiz-container">
+                        <p id="quiz-progress"></p>
+                        <h3 id="quiz-question"></h3>
+                        <div id="quiz-answer-options">
+                            <!-- Botões de resposta serão inseridos aqui -->
+                        </div>
+                    </div>
+                    <div id="quiz-result-container" style="display: none;">
+                        <h3>A nossa sugestão para si:</h3>
+                        <div id="gemini-quiz-result">
+                            <!-- O resultado da IA aparecerá aqui -->
+                        </div>
+                         <button class="btn" id="retake-quiz-btn" style="margin-top: 20px;">Fazer o Quiz Novamente</button>
+                    </div>
+                </div>
+            </section>
         </main>
         
         <footer>
@@ -400,9 +473,27 @@
                 { id: 10, name: 'Body Chain Sensual', price: 139.90, image: 'https://images.unsplash.com/photo-1642699293132-a4f220376587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80', category: 'Lingeries', description: 'Acessório corporal que enfeita e adiciona um toque extra de sensualidade ao seu visual.', featured: false }
             ];
             
+            // --- DADOS DO QUIZ ---
+            const quizData = [
+                {
+                    question: "Qual o principal objetivo para a sua noite?",
+                    options: ["Relaxar e conectar", "Explorar novas sensações", "Apimentar a relação", "Uma fantasia ousada"]
+                },
+                {
+                    question: "Qual o seu nível de experiência com produtos eróticos?",
+                    options: ["Iniciante, quero começar", "Já experimentei algumas coisas", "Intermediário, gosto de novidades", "Avançado, busco algo intenso"]
+                },
+                {
+                    question: "Qual ambiente mais lhe agrada?",
+                    options: ["Romântico, com velas e massagem", "Divertido e descontraído", "Luxuoso e sofisticado", "Aventureiro e imprevisível"]
+                }
+            ];
+            let currentQuestionIndex = 0;
+            let userAnswers = [];
+
             // --- ESTADO DA APLICAÇÃO ---
-            let historyStack = ['page-home']; // Pilha para o botão "Voltar"
-            let currentProduct = null; // Armazena o produto da página de detalhe
+            let historyStack = ['page-home'];
+            let currentProduct = null;
 
             // --- ELEMENTOS DO DOM ---
             const ageGate = document.getElementById('age-gate');
@@ -415,7 +506,7 @@
             
             // --- FUNÇÃO DE CHAMADA DA API GEMINI ---
             const callGeminiAPI = async (prompt, resultContainer) => {
-                const apiKey = "AIzaSyC2fHWnV4Dk7AFNad1bfwigfqHc19PJHMI"; // Chave da API adicionada
+                const apiKey = "AIzaSyC2fHWnV4Dk7AFNad1bfwigfqHc19PJHMI";
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
                 
                 resultContainer.innerHTML = '<div class="loader"></div>';
@@ -424,19 +515,12 @@
                     const response = await fetch(apiUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{ parts: [{ text: prompt }] }]
-                        })
+                        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                     });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                     const data = await response.json();
                     const text = data.candidates[0].content.parts[0].text;
                     resultContainer.innerHTML = text.replace(/\n/g, '<br>');
-
                 } catch (error) {
                     console.error("Erro na API Gemini:", error);
                     resultContainer.textContent = 'Não foi possível gerar a sugestão. Tente novamente mais tarde.';
@@ -444,20 +528,14 @@
             };
 
             // --- FUNÇÕES DE RENDERIZAÇÃO ---
-            
             const formatPrice = (price) => `R$ ${price.toFixed(2).replace('.', ',')}`;
-
             const createProductCard = (product) => `
                 <div class="product-card" data-id="${product.id}">
                     <img src="${product.image}" alt="${product.name}">
                     <div class="product-card-content">
-                        <div>
-                            <h3>${product.name}</h3>
-                            <p class="product-price">${formatPrice(product.price)}</p>
-                        </div>
+                        <div><h3>${product.name}</h3><p class="product-price">${formatPrice(product.price)}</p></div>
                     </div>
                 </div>`;
-
             const renderProducts = (productsToRender, containerSelector) => {
                 const container = document.querySelector(containerSelector);
                 container.innerHTML = productsToRender.map(createProductCard).join('');
@@ -469,7 +547,10 @@
             // --- FUNÇÕES DE NAVEGAÇÃO ---
             const navigateTo = (pageId, addToHistory = true) => {
                 pages.forEach(page => page.classList.remove('active'));
-                document.getElementById(pageId).classList.add('active');
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                }
                 window.scrollTo(0, 0);
                 if (addToHistory && historyStack[historyStack.length - 1] !== pageId) {
                     historyStack.push(pageId);
@@ -491,16 +572,62 @@
             const openNav = () => { mobileNavPanel.style.width = '100%'; };
             const closeNav = () => { mobileNavPanel.style.width = '0%'; };
 
-            // --- FUNÇÕES DE LÓGICA DE PÁGINA ---
+            // --- LÓGICA DO QUIZ ---
+            const startQuiz = () => {
+                currentQuestionIndex = 0;
+                userAnswers = [];
+                document.getElementById('quiz-container').style.display = 'block';
+                document.getElementById('quiz-result-container').style.display = 'none';
+                displayQuizQuestion();
+            };
 
+            const displayQuizQuestion = () => {
+                const questionData = quizData[currentQuestionIndex];
+                document.getElementById('quiz-progress').textContent = `Pergunta ${currentQuestionIndex + 1} de ${quizData.length}`;
+                document.getElementById('quiz-question').textContent = questionData.question;
+                const optionsContainer = document.getElementById('quiz-answer-options');
+                optionsContainer.innerHTML = '';
+                questionData.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.className = 'answer-btn';
+                    button.textContent = option;
+                    button.onclick = () => selectQuizAnswer(option);
+                    optionsContainer.appendChild(button);
+                });
+            };
+
+            const selectQuizAnswer = (answer) => {
+                userAnswers.push(answer);
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.length) {
+                    displayQuizQuestion();
+                } else {
+                    getQuizRecommendation();
+                }
+            };
+
+            const getQuizRecommendation = () => {
+                document.getElementById('quiz-container').style.display = 'none';
+                document.getElementById('quiz-result-container').style.display = 'block';
+                const resultContainer = document.getElementById('gemini-quiz-result');
+                const productList = products.map(p => `- ${p.name} (Categoria: ${p.category})`).join('\n');
+                const prompt = `Aja como um especialista da sex shop 'Mabelle Secrets'. Um cliente respondeu a um quiz com as seguintes preferências: 
+                1. Objetivo da noite: "${userAnswers[0]}"
+                2. Nível de experiência: "${userAnswers[1]}"
+                3. Ambiente preferido: "${userAnswers[2]}"
+                
+                Com base nestas respostas, recomende 2 ou 3 produtos da nossa lista e explique brevemente por que cada um é ideal para este cliente. A resposta deve ser amigável e útil, em português do Brasil. Formate a resposta como uma lista.
+
+                Lista de produtos disponíveis:
+                ${productList}`;
+                
+                callGeminiAPI(prompt, resultContainer);
+            };
+
+            // --- FUNÇÕES DE LÓGICA DE PÁGINA ---
             const showCategoryPage = (categoryName) => {
                 document.getElementById('category-title').textContent = categoryName;
-                let filteredProducts;
-                if (categoryName === 'Lançamentos') {
-                    filteredProducts = products.slice(-5); 
-                } else {
-                    filteredProducts = products.filter(p => p.category === categoryName);
-                }
+                const filteredProducts = (categoryName === 'Lançamentos') ? products.slice(-5) : products.filter(p => p.category === categoryName);
                 renderProducts(filteredProducts, '#page-category .products-grid');
                 navigateTo('page-category');
             };
@@ -520,15 +647,12 @@
                 const whatsappButton = detailPage.querySelector('.whatsapp-button');
                 const phoneNumber = '5565999287778';
                 const message = `Olá! Tenho interesse no produto: ${product.name} - ${formatPrice(product.price)}`;
-                const encodedMessage = encodeURIComponent(message);
-                
-                whatsappButton.href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                whatsappButton.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
                 
                 navigateTo('page-product-detail');
             };
 
             // --- INICIALIZAÇÃO E LISTENERS ---
-            
             const initializeSite = () => {
                 renderProducts(products.filter(p => p.featured), '#home-products .products-grid');
                 
@@ -540,10 +664,30 @@
                         <div class="category-card-overlay"><h3>${cat}</h3></div>
                     </a>`).join('');
 
-                document.querySelectorAll('.nav-link, nav a').forEach(link => {
+                document.querySelectorAll('nav a, .nav-link').forEach(link => {
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
-                        showCategoryPage(link.dataset.category);
+                        if (link.dataset.page) {
+                            navigateTo(link.dataset.page);
+                            if(link.dataset.page === 'page-quiz') startQuiz();
+                        } else if (link.dataset.category) {
+                            showCategoryPage(link.dataset.category);
+                        }
+                    });
+                });
+                
+                mobileNavLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        closeNav();
+                        setTimeout(() => {
+                           if (link.dataset.page) {
+                               navigateTo(link.dataset.page);
+                               if(link.dataset.page === 'page-quiz') startQuiz();
+                           } else if (link.dataset.category) {
+                               showCategoryPage(link.dataset.category);
+                           }
+                        }, 300);
                     });
                 });
 
@@ -552,32 +696,24 @@
                 
                 const footerWhatsApp = document.getElementById('footer-whatsapp-link');
                 const phoneNumber = '5565999287778';
-                const footerMessage = encodeURIComponent('Olá! Visitei o site da Mabelle Secrets e gostaria de mais informações.');
-                footerWhatsApp.href = `https://wa.me/${phoneNumber}?text=${footerMessage}`;
+                footerWhatsApp.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Olá! Visitei o site da Mabelle Secrets e gostaria de mais informações.')}`;
 
                 hamburgerBtn.addEventListener('click', openNav);
                 closeNavBtn.addEventListener('click', closeNav);
-                mobileNavLinks.forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        closeNav();
-                        setTimeout(() => showCategoryPage(link.dataset.category), 300);
-                    });
-                });
-
+                
                 document.getElementById('gemini-suggestion-btn').addEventListener('click', () => {
                     const prompt = "Aja como um especialista de produtos eróticos, sofisticado e discreto, da loja 'Mabelle Secrets'. Sugira uma experiência romântica para uma noite especial, utilizando criativamente os seguintes produtos da nossa loja: Vibrador Sônico Pro, Lingerie Renda Noire, e Óleo de Massagem Corporal. Descreva um cenário inspirador, focando na conexão e descoberta do casal. A resposta deve ser um parágrafo curto, elegante e sedutor, escrito em português do Brasil.";
-                    const resultContainer = document.getElementById('gemini-suggestion-result');
-                    callGeminiAPI(prompt, resultContainer);
+                    callGeminiAPI(prompt, document.getElementById('gemini-suggestion-result'));
                 });
 
                 document.getElementById('gemini-description-btn').addEventListener('click', () => {
                     if (currentProduct) {
                          const prompt = `Você é um copywriter poético e sedutor da loja 'Mabelle Secrets'. Crie uma descrição alternativa, curta e inspiradora (2-3 frases) para o produto: "${currentProduct.name}". Foque nas sensações e na promessa da experiência, em vez de detalhes técnicos. Use uma linguagem elegante e sugestiva, em português do Brasil.`;
-                         const resultContainer = document.querySelector('#page-product-detail .product-description');
-                         callGeminiAPI(prompt, resultContainer);
+                         callGeminiAPI(prompt, document.querySelector('#page-product-detail .product-description'));
                     }
                 });
+                
+                document.getElementById('retake-quiz-btn').addEventListener('click', startQuiz);
 
                 navigateTo('page-home', false);
             };
@@ -588,7 +724,6 @@
                 mainContent.style.display = 'block';
                 initializeSite();
             }
-
             document.getElementById('age-gate-enter').addEventListener('click', () => {
                 sessionStorage.setItem('isOfAge', 'true');
                 ageGate.style.opacity = '0';
@@ -598,7 +733,6 @@
                     initializeSite();
                 }, 500);
             });
-
             document.getElementById('age-gate-exit').addEventListener('click', () => {
                 window.location.href = 'https://www.google.com';
             });
