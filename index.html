@@ -312,6 +312,7 @@
     <!-- Painel de Navegação Móvel -->
     <div id="mobile-nav-panel" class="mobile-nav">
         <a href="javascript:void(0)" class="close-btn">&times;</a>
+        <a class="mobile-nav-link" data-page="page-home">Início</a>
         <a class="mobile-nav-link" data-category="Lançamentos">Lançamentos</a>
         <a class="mobile-nav-link" data-category="Para Elas">Para Elas</a>
         <a class="mobile-nav-link" data-category="Para Eles">Para Eles</a>
@@ -338,6 +339,7 @@
                 <div class="logo">Mabelle Secrets</div>
                 <nav>
                     <ul>
+                        <li><a data-page="page-home">Início</a></li>
                         <li><a data-category="Lançamentos">Lançamentos</a></li>
                         <li><a data-category="Para Elas">Para Elas</a></li>
                         <li><a data-category="Para Eles">Para Eles</a></li>
@@ -459,18 +461,18 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- BANCO DE DADOS DE PRODUTOS (SIMULADO) ---
+            // --- BANCO DE DADOS DE PRODUTOS (SIMULADO COM NOVAS IMAGENS) ---
             const products = [
-                { id: 1, name: 'Vibrador Sônico Pro', price: 299.90, image: 'https://images.unsplash.com/photo-1617804159114-1b5962788533?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80', category: 'Para Elas', description: 'Tecnologia sônica para sensações incomparáveis. Múltiplas intensidades e material de silicone seguro para o corpo.', featured: true },
-                { id: 2, name: 'Lingerie Renda Noire', price: 189.90, image: 'https://images.unsplash.com/photo-1619118399587-fd8935447e17?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80', category: 'Lingeries', description: 'Conjunto de lingerie em renda preta, desenhado para valorizar suas curvas com elegância e sensualidade.', featured: true },
-                { id: 3, name: 'Óleo de Massagem Corporal', price: 89.90, image: 'https://images.unsplash.com/photo-1620916566398-39f19a3e7e3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80', category: 'Cosméticos', description: 'Óleo com fragrância afrodisíaca, perfeito para momentos de relaxamento e intimidade. Desliza facilmente sobre a pele.', featured: true },
-                { id: 4, name: 'Plug Anal Iniciante', price: 129.90, image: 'https://images.unsplash.com/photo-1603722350802-b31a0a241a7c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80', category: 'Para Eles', description: 'Ideal para quem está começando a explorar o prazer anal. Feito de silicone macio e com base segura.', featured: true },
-                { id: 5, name: 'Kit Fantasia Colegial', price: 159.90, image: 'https://images.unsplash.com/photo-1594912223528-9a9b23351221?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80', category: 'Lingeries', description: 'Realize suas fantasias com este kit completo de colegial, incluindo saia, top e acessórios.', featured: true },
-                { id: 6, name: 'Gel Excitante Hot Kiss', price: 49.90, image: 'https://images.unsplash.com/photo-1631089552195-8f029063b5e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80', category: 'Cosméticos', description: 'Gel beijável com efeito quente que aumenta a sensibilidade e o prazer. Perfeito para preliminares.', featured: true },
-                { id: 7, name: 'Anel Peniano com Vibração', price: 99.90, image: 'https://images.unsplash.com/photo-1639550325179-8c4f923521b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80', category: 'Para Eles', description: 'Prolonga a ereção e proporciona vibrações estimulantes para o casal. Material flexível e confortável.', featured: false },
-                { id: 8, name: 'Vela Beijável Sabor Morango', price: 79.90, image: 'https://images.unsplash.com/photo-1616110943943-d3435d3d8201?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80', category: 'Cosméticos', description: 'Acenda, espere derreter e use como um óleo de massagem quente e beijável. Delicioso sabor de morango.', featured: true },
-                { id: 9, name: 'Bullet Vibrador Discreto', price: 119.90, image: 'https://images.unsplash.com/photo-1621484252328-55d1b1fba5b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80', category: 'Para Elas', description: 'Pequeno, potente e discreto. Perfeito para levar na bolsa e usar onde a imaginação permitir.', featured: false },
-                { id: 10, name: 'Body Chain Sensual', price: 139.90, image: 'https://images.unsplash.com/photo-1642699293132-a4f220376587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80', category: 'Lingeries', description: 'Acessório corporal que enfeita e adiciona um toque extra de sensualidade ao seu visual.', featured: false }
+                { id: 1, name: 'Vibrador Sônico Pro', price: 299.90, image: 'https://i.imgur.com/rG7nB4H.jpeg', category: 'Para Elas', description: 'Tecnologia sônica para sensações incomparáveis. Múltiplas intensidades e material de silicone seguro para o corpo.', featured: true },
+                { id: 2, name: 'Lingerie Renda Noire', price: 189.90, image: 'https://i.imgur.com/8Y3eL4f.jpeg', category: 'Lingeries', description: 'Conjunto de lingerie em renda preta, desenhado para valorizar suas curvas com elegância e sensualidade.', featured: true },
+                { id: 3, name: 'Óleo de Massagem Corporal', price: 89.90, image: 'https://i.imgur.com/j4s4jJd.jpeg', category: 'Cosméticos', description: 'Óleo com fragrância afrodisíaca, perfeito para momentos de relaxamento e intimidade. Desliza facilmente sobre a pele.', featured: true },
+                { id: 4, name: 'Plug Anal Iniciante', price: 129.90, image: 'https://i.imgur.com/D4Y7Y2K.jpeg', category: 'Para Eles', description: 'Ideal para quem está começando a explorar o prazer anal. Feito de silicone macio e com base segura.', featured: true },
+                { id: 5, name: 'Kit Fantasia Colegial', price: 159.90, image: 'https://i.imgur.com/c4Y2K0P.jpeg', category: 'Lingeries', description: 'Realize suas fantasias com este kit completo de colegial, incluindo saia, top e acessórios.', featured: true },
+                { id: 6, name: 'Gel Excitante Hot Kiss', price: 49.90, image: 'https://i.imgur.com/B9B1Z0g.jpeg', category: 'Cosméticos', description: 'Gel beijável com efeito quente que aumenta a sensibilidade e o prazer. Perfeito para preliminares.', featured: true },
+                { id: 7, name: 'Anel Peniano com Vibração', price: 99.90, image: 'https://i.imgur.com/S9g9e8f.jpeg', category: 'Para Eles', description: 'Prolonga a ereção e proporciona vibrações estimulantes para o casal. Material flexível e confortável.', featured: false },
+                { id: 8, name: 'Vela Beijável Sabor Morango', price: 79.90, image: 'https://i.imgur.com/mO2X1Yk.jpeg', category: 'Cosméticos', description: 'Acenda, espere derreter e use como um óleo de massagem quente e beijável. Delicioso sabor de morango.', featured: true },
+                { id: 9, name: 'Bullet Vibrador Discreto', price: 119.90, image: 'https://i.imgur.com/tN8o2Tf.jpeg', category: 'Para Elas', description: 'Pequeno, potente e discreto. Perfeito para levar na bolsa e usar onde a imaginação permitir.', featured: false },
+                { id: 10, name: 'Body Chain Sensual', price: 139.90, image: 'https://i.imgur.com/kQ8bM4Z.jpeg', category: 'Lingeries', description: 'Acessório corporal que enfeita e adiciona um toque extra de sensualidade ao seu visual.', featured: false }
             ];
             
             // --- DADOS DO QUIZ ---
