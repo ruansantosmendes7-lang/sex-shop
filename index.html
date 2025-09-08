@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intimus - Sua Loja de Prazer</title>
+    <!-- Fontes do Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS (Estilos) embutido no HTML -->
+    <style>
+        /* --- Configurações Gerais e Cores --- */
+        :root {
+            --cor-principal: #c53364; /* Rosa escuro / Magenta */
+            --cor-fundo: #121212;     /* Fundo escuro */
+            --cor-texto: #f5f5f5;     /* Texto claro */
+            --cor-card: #1e1e1e;      /* Fundo dos cards de produto */
+            --cor-sucesso: #21ba45;   /* Verde para feedback */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--cor-principal);
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--cor-texto);
+        }
+
+        /* --- Verificador de Idade --- */
+        #age-gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: opacity 0.5s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .age-gate-box {
+            background-color: var(--cor-card);
+            padding: 40px;
+            border-radius: 10px;
+            max-width: 500px;
+            border: 1px solid #333;
+        }
+
+        .age-gate-box h1 {
+            color: var(--cor-principal);
+            margin-bottom: 15px;
+            font-size: 2em;
+        }
+
+        .age-gate-box p {
+            margin-bottom: 30px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        .age-gate-buttons button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        #age-gate-enter {
+            background-color: var(--cor-principal);
+            color: white;
+        }
+        #age-gate-enter:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--cor-principal);
+        }
+        #age-gate-exit {
+            background-color: #333;
+            color: var(--cor-texto);
+        }
+         #age-gate-exit:hover {
+            background-color: #444;
+        }
+
+        /* --- Conteúdo Principal (Oculto até a verificação) --- */
+        #main-content {
+            display: none; 
+        }
+        
+        /* --- Cabeçalho --- */
+        header {
+            background-color: var(--cor-card);
+            padding: 20px 0;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--cor-principal);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--cor-texto);
+            font-weight: 500;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--cor-principal);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .header-icons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .header-icons svg {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .header-icons svg:hover {
+            transform: scale(1.1);
+        }
+        
+        #cart-container {
+            position: relative;
+        }
+        
+        #cart-count {
+            background-color: var(--cor-principal);
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-weight: bold;
+        }
+
+        /* --- Seção de Destaque (Hero) --- */
+        .hero {
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://placehold.co/1200x500/c53364/121212?text=Descubra+Novas+Sensações');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background-color: var(--cor-principal);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            border: 2px solid var(--cor-principal);
+        }
+
+        .btn:hover {
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--cor-principal);
+        }
+        
+        /* --- Seção de Produtos --- */
+        .featured-products {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: var(--cor-principal);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--cor-card);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            padding-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #333;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(197, 51, 100, 0.2);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .product-card h3 {
+            font-size: 18px;
+            margin: 15px 10px 10px;
+            height: 40px; /* Garante altura consistente */
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--cor-principal);
+            margin-bottom: 15px;
+        }
+        
+        .add-to-cart-btn {
+            background-color: transparent;
+            border: 2px solid var(--cor-principal);
+            color: var(--cor-principal);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 85%;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: var(--cor-principal);
+            color: white;
+        }
+        
+        .add-to-cart-btn.added {
+             background-color: var(--cor-sucesso);
+             color: white;
+             border-color: var(--cor-sucesso);
+             cursor: not-allowed;
+        }
+        
+        /* --- Rodapé --- */
+        footer {
+            background-color: var(--cor-card);
+            padding: 40px 0;
+            border-top: 1px solid #333;
+            text-align: center;
+        }
+        
+        footer p {
+            margin-bottom: 20px;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-icons svg {
+            width: 28px;
+            height: 28px;
+        }
+        
+        /* --- Layout Responsivo --- */
+        @media (max-width: 768px) {
+            nav { display: none; } /* Em um site real, isso viraria um menu "hambúrguer" */
+            .hero h2 { font-size: 36px; }
+            .section-title { font-size: 28px; }
+            .age-gate-buttons { display: flex; flex-direction: column; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Módulo de Verificação de Idade -->
+    <div id="age-gate">
+        <div class="age-gate-box">
+            <h1>Bem-vindo(a) à Intimus</h1>
+            <p>Este site contém conteúdo destinado a adultos. Para entrar, você deve ter 18 anos ou mais. Ao continuar, você confirma que tem idade legal para visualizar este conteúdo em sua região.</p>
+            <div class="age-gate-buttons">
+                <button id="age-gate-enter">Tenho mais de 18 anos</button>
+                <button id="age-gate-exit">Sair</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteúdo Principal do Site -->
+    <div id="main-content">
+        <header>
+            <div class="container header-content">
+                <div class="logo">Intimus</div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Lançamentos</a></li>
+                        <li><a href="#">Para Elas</a></li>
+                        <li><a href="#">Para Eles</a></li>
+                        <li><a href="#">Lingeries</a></li>
+                    </ul>
+                </nav>
+                <div class="header-icons">
+                    <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                    <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                    <div id="cart-container">
+                        <svg fill="currentColor" viewBox="0 0 20 20"><path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"></path></svg>
+                        <span id="cart-count">0</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="container">
+                    <h2>Liberte Seus Desejos</h2>
+                    <p>Produtos selecionados para suas melhores experiências. Embalagem 100% discreta.</p>
+                    <a href="#" class="btn">Explorar Lançamentos</a>
+                </div>
+            </section>
+
+            <section class="featured-products">
+                <div class="container">
+                    <h2 class="section-title">Destaques da Semana</h2>
+                    <div class="products-grid">
+                        <!-- Produto 1 -->
+                        <div class="product-card">
+                            <img src="https://placehold.co/400x400/1e1e1e/c53364?text=Produto+1" alt="Nome do Produto 1">
+                            <h3>Vibrador Sônico Pro</h3>
+                            <p class="product-price">R$ 299,90</p>
+                            <button class="add-to-cart-btn">Adicionar ao Carrinho</button>
+                        </div>
+                        <!-- Produto 2 -->
+                        <div class="product-card">
+                            <img src="https://placehold.co/400x400/1e1e1e/c53364?text=Produto+2" alt="Nome do Produto 2">
+                            <h3>Lingerie Renda Noire</h3>
+                            <p class="product-price">R$ 189,90</p>
+                            <button class="add-to-cart-btn">Adicionar ao Carrinho</button>
+                        </div>
+                        <!-- Produto 3 -->
+                        <div class="product-card">
+                            <img src="https://placehold.co/400x400/1e1e1e/c53364?text=Produto+3" alt="Nome do Produto 3">
+                            <h3>Óleo de Massagem Corporal</h3>
+                            <p class="product-price">R$ 89,90</p>
+                            <button class="add-to-cart-btn">Adicionar ao Carrinho</button>
+                        </div>
+                        <!-- Produto 4 -->
+                        <div class="product-card">
+                            <img src="https://placehold.co/400x400/1e1e1e/c53364?text=Produto+4" alt="Nome do Produto 4">
+                            <h3>Plug Anal Iniciante</h3>
+                            <p class="product-price">R$ 129,90</p>
+                            <button class="add-to-cart-btn">Adicionar ao Carrinho</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <div class="container">
+                <p>&copy; 2025 Intimus. Todos os direitos reservados. Envio discreto para todo o Brasil.</p>
+                <div class="social-icons">
+                    <a href="#"><svg fill="currentColor" viewBox="0 0 24 24" aria-label="Instagram logo"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.585-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.585-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.585.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.415 2.175 8.796 2.163 12 2.163m0-2.163C8.74 0 8.333.012 7.053.072 2.695.272.273 2.69.073 7.052.012 8.333 0 8.74 0 12s.012 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.988 8.74 24 12 24s3.667-.012 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98C23.988 15.667 24 15.26 24 12s-.012-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98C15.667.012 15.26 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"></path></svg></a>
+                    <a href="#"><svg fill="currentColor" viewBox="0 0 24 24" aria-label="Facebook logo"><path d="M22.675 0h-21.35C.59 0 0 .59 0 1.325v21.35C0 23.41.59 24 1.325 24H12.82v-9.29H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.735 0 1.325-.59 1.325-1.325V1.325C24 .59 23.41 0 22.675 0z"></path></svg></a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript para Funcionalidades -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Lógica do Verificador de Idade ---
+            const ageGate = document.getElementById('age-gate');
+            const enterButton = document.getElementById('age-gate-enter');
+            const exitButton = document.getElementById('age-gate-exit');
+            const mainContent = document.getElementById('main-content');
+            
+            // Verifica se o usuário já validou a idade na sessão atual
+            if (sessionStorage.getItem('isOfAge') === 'true') {
+                ageGate.style.display = 'none';
+                mainContent.style.display = 'block';
+            }
+
+            enterButton.addEventListener('click', () => {
+                sessionStorage.setItem('isOfAge', 'true');
+                
+                ageGate.style.opacity = '0';
+                setTimeout(() => {
+                    ageGate.style.display = 'none';
+                    mainContent.style.display = 'block';
+                }, 500); // Sincronizado com a transição do CSS
+            });
+
+            exitButton.addEventListener('click', () => {
+                // Redireciona para um site neutro
+                window.location.href = 'https://www.google.com';
+            });
+            
+            
+            // --- Lógica do Carrinho de Compras (Simulado) ---
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            const cartCountElement = document.getElementById('cart-count');
+            let cartCount = 0;
+
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    if (button.classList.contains('added')) return; // Impede múltiplos cliques
+
+                    cartCount++;
+                    cartCountElement.textContent = cartCount;
+
+                    // Feedback visual no botão
+                    button.textContent = 'Adicionado!';
+                    button.classList.add('added');
+                    
+                    // Opcional: reverter o botão após um tempo para permitir adicionar novamente
+                    // setTimeout(() => {
+                    //    button.textContent = 'Adicionar ao Carrinho';
+                    //    button.classList.remove('added');
+                    // }, 2000);
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
