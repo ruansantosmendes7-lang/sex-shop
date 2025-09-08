@@ -202,10 +202,57 @@
             color: var(--cor-texto); font-size: 16px;
         }
         .social-icon svg { width: 28px; height: 28px; }
+
+        /* --- Menu Hambúrguer e Navegação Móvel --- */
+        #hamburger-menu {
+            display: none;
+            cursor: pointer;
+            z-index: 201;
+        }
+        #hamburger-menu div {
+            width: 30px;
+            height: 3px;
+            background-color: var(--cor-texto);
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+        .mobile-nav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 200;
+            top: 0;
+            left: 0;
+            background-color: var(--cor-fundo);
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            text-align: center;
+        }
+        .mobile-nav .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 36px;
+            color: var(--cor-texto);
+            text-decoration: none;
+        }
+        .mobile-nav a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 24px;
+            color: var(--cor-texto);
+            display: block;
+            transition: 0.3s;
+        }
+        .mobile-nav a:hover {
+            color: var(--cor-principal);
+        }
         
         /* --- Layout Responsivo --- */
         @media (max-width: 768px) {
             nav { display: none; }
+            #hamburger-menu { display: block; }
             .hero h2 { font-size: 36px; }
             .section-title { font-size: 28px; }
             .age-gate-buttons { display: flex; flex-direction: column; gap: 15px; }
@@ -214,6 +261,15 @@
     </style>
 </head>
 <body>
+    
+    <!-- Painel de Navegação Móvel -->
+    <div id="mobile-nav-panel" class="mobile-nav">
+        <a href="javascript:void(0)" class="close-btn">&times;</a>
+        <a class="mobile-nav-link" data-category="Lançamentos">Lançamentos</a>
+        <a class="mobile-nav-link" data-category="Para Elas">Para Elas</a>
+        <a class="mobile-nav-link" data-category="Para Eles">Para Eles</a>
+        <a class="mobile-nav-link" data-category="Lingeries">Lingeries</a>
+    </div>
 
     <!-- Módulo de Verificação de Idade -->
     <div id="age-gate">
@@ -240,6 +296,11 @@
                         <li><a data-category="Lingeries">Lingeries</a></li>
                     </ul>
                 </nav>
+                <div id="hamburger-menu">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
             </div>
         </header>
 
@@ -347,6 +408,10 @@
             const ageGate = document.getElementById('age-gate');
             const mainContent = document.getElementById('main-content');
             const pages = document.querySelectorAll('.page-section');
+            const hamburgerBtn = document.getElementById('hamburger-menu');
+            const mobileNavPanel = document.getElementById('mobile-nav-panel');
+            const closeNavBtn = document.querySelector('.mobile-nav .close-btn');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
             
             // --- FUNÇÃO DE CHAMADA DA API GEMINI ---
             const callGeminiAPI = async (prompt, resultContainer) => {
@@ -415,16 +480,16 @@
                 if (historyStack.length > 1) {
                     historyStack.pop();
                     const previousPage = historyStack[historyStack.length - 1];
-                    // Se voltar para detalhes do produto, restaura a descrição original
-                    if (previousPage.startsWith('page-product-detail')) {
+                    if (currentProduct) {
                         const detailPage = document.getElementById('page-product-detail');
-                        if (currentProduct) {
-                            detailPage.querySelector('.product-description').textContent = currentProduct.description;
-                        }
+                        detailPage.querySelector('.product-description').textContent = currentProduct.description;
                     }
                     navigateTo(previousPage, false);
                 }
             };
+
+            const openNav = () => { mobileNavPanel.style.width = '100%'; };
+            const closeNav = () => { mobileNavPanel.style.width = '0%'; };
 
             // --- FUNÇÕES DE LÓGICA DE PÁGINA ---
 
@@ -443,7 +508,7 @@
             const showProductDetail = (productId) => {
                 const product = products.find(p => p.id == productId);
                 if (!product) return;
-                currentProduct = product; // Armazena o produto atual
+                currentProduct = product;
                 
                 const detailPage = document.getElementById('page-product-detail');
                 detailPage.querySelector('.product-detail-image img').src = product.image;
@@ -490,14 +555,22 @@
                 const footerMessage = encodeURIComponent('Olá! Visitei o site da Mabelle Secrets e gostaria de mais informações.');
                 footerWhatsApp.href = `https://wa.me/${phoneNumber}?text=${footerMessage}`;
 
-                // Listener para "Sugestão da Noite"
+                hamburgerBtn.addEventListener('click', openNav);
+                closeNavBtn.addEventListener('click', closeNav);
+                mobileNavLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        closeNav();
+                        setTimeout(() => showCategoryPage(link.dataset.category), 300);
+                    });
+                });
+
                 document.getElementById('gemini-suggestion-btn').addEventListener('click', () => {
                     const prompt = "Aja como um especialista de produtos eróticos, sofisticado e discreto, da loja 'Mabelle Secrets'. Sugira uma experiência romântica para uma noite especial, utilizando criativamente os seguintes produtos da nossa loja: Vibrador Sônico Pro, Lingerie Renda Noire, e Óleo de Massagem Corporal. Descreva um cenário inspirador, focando na conexão e descoberta do casal. A resposta deve ser um parágrafo curto, elegante e sedutor, escrito em português do Brasil.";
                     const resultContainer = document.getElementById('gemini-suggestion-result');
                     callGeminiAPI(prompt, resultContainer);
                 });
 
-                // Listener para "Descrição Criativa"
                 document.getElementById('gemini-description-btn').addEventListener('click', () => {
                     if (currentProduct) {
                          const prompt = `Você é um copywriter poético e sedutor da loja 'Mabelle Secrets'. Crie uma descrição alternativa, curta e inspiradora (2-3 frases) para o produto: "${currentProduct.name}". Foque nas sensações e na promessa da experiência, em vez de detalhes técnicos. Use uma linguagem elegante e sugestiva, em português do Brasil.`;
